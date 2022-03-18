@@ -10,5 +10,9 @@
     "fart"
   ],
   "author": "Jack FartShartley",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.3",
+    "nodemon": "^2.0.15"
+  }
 }
