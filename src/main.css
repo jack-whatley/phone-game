@@ -12,4 +12,37 @@
     left: 50%;
     transform: translate(-50%,-50%);
 
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.player-box {
+
+    width: 30%;
+    height: 100%;
+    border-right: 1px solid black;
+
+}
+
+.chat-box {
+
+    width: 70%;
+    height: 100%;
+
+}
+
+.player-title, .chat-title {
+
+    margin: 0px;
+    padding: 5px;
+    width: calc(100% - 10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-bottom: 1px solid black;
+
 }

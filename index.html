@@ -13,6 +13,7 @@
         </title>
 
         <link rel="shortcut icon" type="image/x-icon" href="./images/shit.png">
+        <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="./src/header.css">
         <link rel="stylesheet" href="./src/main.css">
 
@@ -32,9 +33,9 @@
 
             <div class="header-cont">
 
-                <a href="#" class="header-button">Host Game</a>
-                <a href="#" class="header-button">Join Game</a>
-                <a href="#" class="header-button">About Game</a>
+                <button class="header-button" id="host-button">Host Game</button>
+                <button class="header-button" id="join-button">Join Game</button>
+                <p class="header-text">Room Code: <span id="room-num"></span></p>
 
             </div>
 
@@ -42,9 +43,21 @@
 
         <div class="body">
 
-            
+            <div class="player-box">
+
+                <h3 class="player-title">Players</h3>
+
+            </div>
+
+            <div class="chat-box">
+
+                <h3 class="chat-title">Chat</h3>
+
+            </div>
 
         </div>
+
+        <script src="./src/main.js"></script>
 
     </body>
 
