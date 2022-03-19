@@ -37,12 +37,22 @@
 .player-title, .chat-title {
 
     margin: 0px;
-    padding: 5px;
+    padding: .5em;
     width: calc(100% - 10px);
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 1em;
 
     border-bottom: 1px solid black;
 
 }
+
+.player-item {
+
+    width: 100%;
+    height: calc((100% - 2.4em) / 5);
+    background: red;
+
+}
+

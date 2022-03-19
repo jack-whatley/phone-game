@@ -2,9 +2,9 @@
 // https://www.tutorialspoint.com/expressjs/expressjs_routing.htm
 
 const express = require("express");
-const { options } = require("nodemon/lib/config");
 const app = express();
-
+let http = require('http').Server(app);
+let io = require('socket.io')(http);
 const path = require("path");
 
 app.use(express.static("public"));
