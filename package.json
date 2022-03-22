@@ -4,12 +4,12 @@
   "description": "this is my fartic phone",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "npx nodemon server.js"
   },
   "keywords": [
-    "fart"
+    "."
   ],
-  "author": "Jack FartShartley",
+  "author": "Jack Whatley",
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.3",
