@@ -1,15 +1,22 @@
-import express from "express";
-
+const express = require("express");
 const app = express();
-const path = require("path");
-const PORT = process.env.PORT || 5000;
 
-app.use(express.static("public"));
+const server = require("http").createServer(app);
+const io = require("socket.io")(server);
+
+app.use(express.static(__dirname + "/node_modules"));
+app.use(express.static(__dirname + "/public"));
 
 app.get("/", function(req, res) {
 
-    res.sendFile(path.join(__dirname, "/index.html"));
+    res.sendFile(__dirname + "/index.html");
 
 });
 
-app.listen(PORT);
+io.on("connection", (socket) => {
+
+    console.log("a user connected");
+
+});
+
+server.listen(5000);
