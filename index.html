@@ -42,12 +42,12 @@
 
         </div>
 
-        <div class="name-input">
+        <!--<div class="name-input">
 
             <input type="text" id="name-box"><br>
             <button class="submit-button">Submit Name</button>
 
-        </div>
+        </div>-->
 
         <div class="body">
 
@@ -61,12 +61,24 @@
 
                 <h3 class="chat-title">Chat</h3>
 
+                <form id="form">
+
+                    <input id="message-box" type="text">
+                    <button id="chat-button">Send</button>
+
+                </form>
+
+                <ul id="messages-box"></ul>
+
             </div>
 
         </div>
 
         <script src="/socket.io/socket.io.js"></script>
         <script>
+
+            let input = document.getElementById("message-box");
+            let form = document.getElementById("form");
 
             let socket = io();
             let username = "";
@@ -76,6 +88,24 @@
                 username = $("#name-box").val();
                 $(".name-input").css("display", "none");
                 console.log(username);
+
+            });
+
+            form.addEventListener("submit", function(e) {
+
+                e.preventDefault();
+                if(input.value) {
+
+                    socket.emit("chat message", input.value);
+                    input.value = "";
+
+                }
+
+            });
+
+            socket.on("chat message", function(msg) {
+
+                $("#messages-box").append('<li class="chat-message">' + msg + '</li>');
 
             });
 
