@@ -100,16 +100,16 @@
                 e.preventDefault();
                 if(input.value) {
 
-                    socket.emit("chat message", input.value);
+                    socket.emit("chat message", input.value, username);
                     input.value = "";
 
                 }
 
             });
 
-            socket.on("chat message", function(msg) {
+            socket.on("chat message", function(msg, username) {
 
-                $("#messages-box").append('<li class="chat-message">' + msg + '</li>');
+                $("#messages-box").append(`<li class="chat-message"><b>${username}:</b> ${msg}</li>`);
 
             });
 

@@ -4,7 +4,7 @@ const app = express();
 const server = require("http").createServer(app);
 const io = require("socket.io")(server);
 
-let usernames = [];
+let playerList = [];
 
 app.use(express.static(__dirname + "/node_modules"));
 app.use(express.static(__dirname + "/public"));
@@ -17,20 +17,20 @@ app.get("/", function(req, res) {
 
 io.on("connection", (socket) => {
 
-    console.log("a user connected");
+    console.log("a user connected: " + socket.id);
 
-    socket.on("chat message", (msg) => {
+    socket.on("chat message", (msg, username) => {
         
         // console.log("message: " + msg);
-        io.emit("chat message", msg);
+        io.emit("chat message", msg, username);
       
     });
 
     socket.on("get username", (username) => {
 
-        usernames.push(username);
+        playerList.push(username);
         //console.log(usernames);
-        io.emit("send usernames", usernames);
+        io.emit("send usernames", playerList);
 
     });
 
