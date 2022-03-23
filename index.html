@@ -28,7 +28,7 @@
 
                 <img src="./favicon.ico" width="30px" height="30px" alt="icon" />
                 
-                <h2 class="title">Fartic Game <sup>©</sup></h2>
+                <h2 class="title">Fartic Game<sup>©</sup></h2>
 
             </div>
 
@@ -42,18 +42,21 @@
 
         </div>
 
-        <!--<div class="name-input">
+        <div class="name-input">
 
-            <input type="text" id="name-box"><br>
+            <label for="name-box">Enter Username Here:</label>
+            <input type="text" id="name-box" name="name-box">
             <button class="submit-button">Submit Name</button>
 
-        </div>-->
+        </div>
 
         <div class="body">
 
             <div class="player-box">
 
                 <h3 class="player-title">Players</h3>
+
+                <ul id="players-box"></ul>
 
             </div>
 
@@ -88,10 +91,9 @@
                 username = $("#name-box").val();
                 $(".name-input").css("display", "none");
                 console.log(username);
+                socket.emit("get username", username);
 
             });
-
-
 
             form.addEventListener("submit", function(e) {
 
@@ -108,6 +110,17 @@
             socket.on("chat message", function(msg) {
 
                 $("#messages-box").append('<li class="chat-message">' + msg + '</li>');
+
+            });
+
+            socket.on("send usernames", function(usernames) {
+
+                $("#players-box").empty();
+                for(let i=0; i < usernames.length; i++) {
+
+                    $("#players-box").append('<li class="player-li">' + usernames[i] + '</li>');
+
+                }
 
             });
 
