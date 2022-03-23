@@ -4,6 +4,8 @@ const app = express();
 const server = require("http").createServer(app);
 const io = require("socket.io")(server);
 
+let usernames = [];
+
 app.use(express.static(__dirname + "/node_modules"));
 app.use(express.static(__dirname + "/public"));
 

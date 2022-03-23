@@ -106,8 +106,14 @@ form {
 
 }
 
-.chat-message:nth-child(odd) {
+.chat-message:nth-child(even) {
 
     background: #efefef;
+
+}
+
+sup {
+
+    font-size: xx-small;
 
 }
