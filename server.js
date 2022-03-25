@@ -4,10 +4,10 @@ const app = express();
 const server = require("http").createServer(app);
 const io = require("socket.io")(server);
 
-let playerList = [];
-
 app.use(express.static(__dirname + "/node_modules"));
 app.use(express.static(__dirname + "/public"));
+
+let playerList = [];
 
 app.get("/", function(req, res) {
 
@@ -17,29 +17,18 @@ app.get("/", function(req, res) {
 
 io.on("connection", (socket) => {
 
-    console.log("a user connected: " + socket.id);
+    console.log(`user id: ${socket.id}`); // this works
 
-    socket.on("chat message", (msg, username) => {
-        
-        // console.log("message: " + msg);
-        io.emit("chat message", msg, username);
-      
-    });
-
-    socket.on("get username", (username, id) => {
-
-        playerList.push({id: id, name: username});
-        console.log(playerList);
-        io.emit("send usernames", playerList);
-
-    });
+    
 
     socket.on("disconnect", () => {
 
-        console.log("a user disconnected");
+        console.log(`user dc'd: ${socket.id}`); // this works
 
     });
 
 });
+
+// remember this is branch: lobby-test
 
 server.listen(5000);
