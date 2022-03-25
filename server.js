@@ -26,10 +26,10 @@ io.on("connection", (socket) => {
       
     });
 
-    socket.on("get username", (username) => {
+    socket.on("get username", (username, id) => {
 
-        playerList.push(username);
-        //console.log(usernames);
+        playerList.push({id: id, name: username});
+        console.log(playerList);
         io.emit("send usernames", playerList);
 
     });

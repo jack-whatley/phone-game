@@ -91,7 +91,7 @@
                 username = $("#name-box").val();
                 $(".name-input").css("display", "none");
                 console.log(username);
-                socket.emit("get username", username);
+                socket.emit("get username", username, socket.id);
 
             });
 
@@ -118,7 +118,7 @@
                 $("#players-box").empty();
                 for(let i=0; i < usernames.length; i++) {
 
-                    $("#players-box").append('<li class="player-li">' + usernames[i] + '</li>');
+                    $("#players-box").append('<li class="player-li">' + usernames[i].name + '</li>');
 
                 }
 

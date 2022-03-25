@@ -115,6 +115,7 @@ form {
 .chat-message {
 
     list-style-type: none;
+    word-wrap: break-word;
 
 }
 
