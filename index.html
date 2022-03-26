@@ -27,8 +27,7 @@
             <div class="header-cont">
 
                 <img src="./favicon.ico" width="30px" height="30px" alt="icon" />
-                
-                <h2 class="title">Fartic Game<sup>©</sup></h2>
+                <h2 class="title">Fartic Phone<sup>©</sup></h2>
 
             </div>
 
@@ -42,7 +41,7 @@
 
         </div>
 
-        <div class="name-input">
+        <div class="name-input hidden">
 
             <label for="name-box">Enter Username Here:</label>
             <input type="text" id="name-box" name="name-box">
@@ -64,7 +63,7 @@
 
                 <h3 class="chat-title">Chat</h3>
 
-                <form id="form">
+                <form class="hidden" id="form">
 
                     <input id="message-box" autocomplete="off" type="text">
                     <button id="chat-button">Send</button>
@@ -80,49 +79,44 @@
         <script src="/socket.io/socket.io.js"></script>
         <script>
 
-            let input = document.getElementById("message-box");
-            let form = document.getElementById("form");
-
             let socket = io();
             let username = "";
-            
-            $(".submit-button").on("click", function() {
+            let roomCode;
+            let form = $("#form");
 
-                username = $("#name-box").val();
-                $(".name-input").css("display", "none");
-                console.log(username);
-                socket.emit("get username", username, socket.id);
+            $("#host-button").on("click", () => {
 
-            });
-
-            form.addEventListener("submit", function(e) {
-
-                e.preventDefault();
-                if(input.value) {
-
-                    socket.emit("chat message", input.value, username);
-                    input.value = "";
-
-                }
+                socket.emit("host game", socket.id);
+                console.log(socket.id)
 
             });
 
-            socket.on("chat message", function(msg, username) {
+            $("#join-button").on("click", () => {
 
-                $("#messages-box").append(`<li class="chat-message"><b>${username}:</b> ${msg}</li>`);
+                roomCode = parseInt(prompt("Enter the room code:"));
+                socket.emit("join game", roomCode);
+
+            });
+
+            socket.on("connectedRoom", function(code) {
+
+                console.log(code);
+                $("#room-num").text(code);
+                $(".name-input").removeClass("hidden");
+                roomCode = code;
 
             });
 
-            socket.on("send usernames", function(usernames) {
+            $(".submit-button").on("click", () => {
 
-                $("#players-box").empty();
-                for(let i=0; i < usernames.length; i++) {
-
-                    $("#players-box").append('<li class="player-li">' + usernames[i].name + '</li>');
-
-                }
+                let name = $("#name-box").val();
+                socket.emit("submit name", socket.id, name, roomCode);
+                $(".name-input").addClass("hidden");
+                form.removeClass("hidden");
 
             });
+
+            $("")
 
         </script>
 

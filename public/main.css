@@ -153,3 +153,9 @@ sup {
     background: #efefef;
 
 }
+
+.hidden {
+
+    display: none !important;
+
+}
