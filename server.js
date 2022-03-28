@@ -18,7 +18,7 @@ app.get("/", function(req, res) {
 
 io.on("connection", (socket) => {
 
-    console.log(`user id: ${socket.id}`); // this works
+    // console.log(`user id: ${socket.id}`); // this works
 
     socket.on("host game", (userId) => {
 
@@ -39,7 +39,7 @@ io.on("connection", (socket) => {
     socket.on("submit name", (id, username, room) => {
 
         users.push({id: id, name: username, room: room});
-        console.log(users);
+        // console.log(users);
 
     });
 
@@ -47,14 +47,18 @@ io.on("connection", (socket) => {
 
         let user = socket.id;
         let currentUser = users.findIndex((x) => x.id === user)
-        console.log(`The user that sent the message is: ${users[currentUser].id}`);
+        // console.log(`The user that sent the message is: ${users[currentUser].id}`);
         io.sockets.in(users[currentUser].room).emit("send message", users[currentUser].name, msg);
 
     });
 
     socket.on("disconnect", () => {
 
-        console.log(`user dc'd: ${socket.id}`); // this works
+        // console.log(`user dc'd: ${socket.id}`); // this works
+        let dcUser = socket.id;
+        let currentUser = users.findIndex((x) => x.id === dcUser);
+        users.splice(currentUser, 1);
+        console.log(users)
 
     });
 
