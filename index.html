@@ -53,7 +53,7 @@
 
             <div class="player-box">
 
-                <h3 class="player-title">Players</h3>
+                <h3 class="player-title">Players:<span id="num-players">-/8</span></h3>
 
                 <ul id="players-box"></ul>
 
@@ -83,6 +83,8 @@
             let username = "";
             let roomCode;
             let form = document.getElementById("form");
+            let joined = false;
+
 
             $("#host-button").on("click", () => {
 
@@ -100,10 +102,15 @@
 
             socket.on("connectedRoom", function(code) {
 
-                console.log(code);
-                $("#room-num").text(code);
-                $(".name-input").removeClass("hidden");
-                roomCode = code;
+                if (joined === false) {
+
+                    console.log(code);
+                    $("#room-num").text(code);
+                    $(".name-input").removeClass("hidden");
+                    roomCode = code;
+                    joined = true;
+
+                }
 
             });
 
@@ -132,6 +139,19 @@
             socket.on("send message", (name, msg) => {
 
                 $("#messages-box").append(`<li class='chat-message'><b>${name}:</b> ${msg}</li>`);
+
+            });
+
+            socket.on("send users", (users) => {
+
+                $("#players-box").empty();
+                for (let i=0; i < users.length; i++) {
+
+                    $("#players-box").append(`<li class="player-li"><b>${i + 1}:</b> ${users[i].name}</li>`);
+
+                }
+
+                $("#num-players").text(`${users.length}/8`);
 
             });
 

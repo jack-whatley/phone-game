@@ -7,8 +7,8 @@ const io = require("socket.io")(server);
 app.use(express.static(__dirname + "/node_modules"));
 app.use(express.static(__dirname + "/public"));
 
-let roomList = [];
 let users = [];
+let rooms = [1];
 
 app.get("/", function(req, res) {
 
@@ -20,10 +20,12 @@ io.on("connection", (socket) => {
 
     // console.log(`user id: ${socket.id}`); // this works
 
+    socket.join(rooms[1]);
+
     socket.on("host game", (userId) => {
 
-        let roomCode = Math.floor(Math.random() * 1000000) + 100000;
-        // console.log(roomCode);
+        let roomCode = Math.floor(Math.random() * 100) + 10;
+        rooms.push(roomCode);
         socket.join(roomCode);
         io.sockets.in(roomCode).emit("connectedRoom", roomCode);
 
@@ -39,15 +41,16 @@ io.on("connection", (socket) => {
     socket.on("submit name", (id, username, room) => {
 
         users.push({id: id, name: username, room: room});
-        // console.log(users);
+        let user = socket.id;
+        let currentUser = users.findIndex((x) => x.id === user)
+        io.sockets.in(users[currentUser].room).emit("send users", users);
 
     });
 
     socket.on("receive message", (msg) => {
 
         let user = socket.id;
-        let currentUser = users.findIndex((x) => x.id === user)
-        // console.log(`The user that sent the message is: ${users[currentUser].id}`);
+        let currentUser = users.findIndex((x) => x.id === user);
         io.sockets.in(users[currentUser].room).emit("send message", users[currentUser].name, msg);
 
     });
@@ -58,7 +61,7 @@ io.on("connection", (socket) => {
         let dcUser = socket.id;
         let currentUser = users.findIndex((x) => x.id === dcUser);
         users.splice(currentUser, 1);
-        console.log(users)
+        // console.log(users)
 
     });
 
