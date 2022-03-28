@@ -82,7 +82,7 @@
             let socket = io();
             let username = "";
             let roomCode;
-            let form = $("#form");
+            let form = document.getElementById("form");
 
             $("#host-button").on("click", () => {
 
@@ -112,11 +112,28 @@
                 let name = $("#name-box").val();
                 socket.emit("submit name", socket.id, name, roomCode);
                 $(".name-input").addClass("hidden");
-                form.removeClass("hidden");
+                $("#form").removeClass("hidden");
 
             });
 
-            $("")
+            form.addEventListener("submit", (e) => {
+
+                e.preventDefault();
+
+                if ($("#message-box").val()) {
+
+                    socket.emit("receive message", $("#message-box").val());
+                    $("#message-box").val("");
+
+                }
+
+            });
+
+            socket.on("send message", (name, msg) => {
+
+                $("#messages-box").append(`<li class='chat-message'><b>${name}:</b> ${msg}</li>`);
+
+            });
 
         </script>
 

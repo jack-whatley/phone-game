@@ -23,7 +23,7 @@ io.on("connection", (socket) => {
     socket.on("host game", (userId) => {
 
         let roomCode = Math.floor(Math.random() * 1000000) + 100000;
-        console.log(roomCode);
+        // console.log(roomCode);
         socket.join(roomCode);
         io.sockets.in(roomCode).emit("connectedRoom", roomCode);
 
@@ -40,6 +40,15 @@ io.on("connection", (socket) => {
 
         users.push({id: id, name: username, room: room});
         console.log(users);
+
+    });
+
+    socket.on("receive message", (msg) => {
+
+        let user = socket.id;
+        let currentUser = users.findIndex((x) => x.id === user)
+        console.log(`The user that sent the message is: ${users[currentUser].id}`);
+        io.sockets.in(users[currentUser].room).emit("send message", users[currentUser].name, msg);
 
     });
 
